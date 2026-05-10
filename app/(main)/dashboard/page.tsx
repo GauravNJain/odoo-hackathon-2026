@@ -32,7 +32,7 @@ export default function DashboardPage() {
   };
 
   const completedTrips = trips?.filter((t) => t.status === "completed") ?? [];
-  const countries = new Set(trips?.map((t) => t.destination.split(",").pop()?.trim()) ?? []);
+  const countries = new Set(trips?.map((t) => t.destination?.split(",").pop()?.trim()).filter(Boolean) ?? []);
   const totalDays = trips?.reduce((sum, t) => {
     const d = (new Date(t.endDate).getTime() - new Date(t.startDate).getTime()) / 86400000;
     return sum + Math.max(0, d);
@@ -42,20 +42,20 @@ export default function DashboardPage() {
     <div className="space-y-8">
       {/* Welcome */}
       <h1 className="font-display text-3xl font-bold text-ink-primary">
-        {getGreeting()}, {user?.firstName ?? "Traveler"} ✈️
+        {getGreeting()}, {user?.firstName ?? "Traveler"} 🗻
       </h1>
 
       {/* Hero banner */}
       <div className="relative overflow-hidden rounded-xl h-56 md:h-64">
         <Image
-          src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80"
+          src="/images/fuji.png"
           alt="Travel banner"
           fill
           className="object-cover"
           priority
           sizes="(max-width: 1280px) 100vw, 1200px"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-900/80 to-brand-700/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-900/60 to-transparent" />
         <div className="relative z-10 flex h-full flex-col justify-center p-6 md:p-10">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white">Where to next?</h2>
           <p className="mt-2 max-w-md text-white/80">Discover new destinations and plan your perfect trip</p>

@@ -48,8 +48,8 @@ function TripCardComponent({ trip, onDelete, compact }: TripCardProps) {
           <MapPin className="h-4 w-4" />
           <span className="text-sm font-medium">{trip.destination}</span>
         </div>
-        <Badge className={cn("absolute right-3 top-3 border text-xs", statusStyles[trip.status])}>
-          {trip.status.charAt(0).toUpperCase() + trip.status.slice(1)}
+        <Badge className={cn("absolute right-3 top-3 border text-xs", statusStyles[trip.status as keyof typeof statusStyles] || statusStyles.upcoming)}>
+          {(trip.status || "upcoming").charAt(0).toUpperCase() + (trip.status || "upcoming").slice(1)}
         </Badge>
       </div>
 

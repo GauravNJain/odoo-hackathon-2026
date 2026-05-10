@@ -52,11 +52,11 @@ export default function RegisterPage() {
     <div className="flex min-h-screen">
       {/* Left hero — desktop only */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80')" }} />
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-900/80 via-brand-800/60 to-brand-600/40" />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/images/fuji.png')" }} />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-900/40 via-brand-500/20 to-transparent" />
         <div className="relative z-10 flex flex-col justify-end p-12">
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-4xl">🌍</span>
+            <span className="text-4xl">🗻</span>
             <span className="font-display text-3xl font-bold text-white">Traveloop</span>
           </div>
           <h2 className="font-display text-5xl font-bold text-white leading-tight">
@@ -72,7 +72,7 @@ export default function RegisterPage() {
       <div className="flex flex-1 items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center lg:hidden">
-            <span className="text-4xl">🌍</span>
+            <span className="text-4xl">🗻</span>
             <h1 className="mt-2 font-display text-2xl font-bold text-ink-primary">Traveloop</h1>
           </div>
 

@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { supabase } from "@/lib/supabase";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 
@@ -17,9 +17,11 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
     const { name, email, password } = validated;
 
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
 
     if (existingUser) {
       return { success: false, error: "User already exists with this email" };
@@ -29,13 +31,21 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
-    const user = await prisma.user.create({
-      data: {
+    const { data: user, error: insertError } = await supabase
+      .from('users')
+      .insert({
+        id: crypto.randomUUID(),
         name,
         email,
         password: hashedPassword,
-      },
-    });
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error("Insert error:", insertError);
+      return { success: false, error: "Failed to create user" };
+    }
 
     return { success: true, user: { id: user.id, email: user.email, name: user.name } };
   } catch (error: any) {

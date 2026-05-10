@@ -37,7 +37,7 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
           <Menu className="h-5 w-5" />
         </Button>
         <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="text-2xl">🌍</span>
+          <span className="text-2xl">🗻</span>
           <span className="font-display text-xl font-bold text-ink-primary">
             Traveloop
           </span>

@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
+import { supabase } from "@/lib/supabase";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 
@@ -12,7 +11,6 @@ export const LoginSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
       name: "credentials",
@@ -27,9 +25,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const { email, password } = validated.data;
 
-        const user = await prisma.user.findUnique({
-          where: { email },
-        });
+        const { data: user } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', email)
+          .single();
 
         if (!user || !user.password) return null;
 

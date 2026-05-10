@@ -56,20 +56,20 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* Traveloop custom colors */
-  --color-canvas: #F7F5F2;
+  --color-canvas: #F4F7F9;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #F0EDE8;
+  --color-surface-hover: #EBF0F3;
 
-  --color-brand-50: #FEF3EE;
-  --color-brand-100: #FDE4D2;
-  --color-brand-200: #FBC5A5;
-  --color-brand-300: #F79E70;
-  --color-brand-400: #F2713A;
-  --color-brand-500: #EE5A1F;
-  --color-brand-600: #DC4110;
-  --color-brand-700: #B72F0E;
-  --color-brand-800: #922714;
-  --color-brand-900: #782215;
+  --color-brand-50: #E6F1F5;
+  --color-brand-100: #CCE3ED;
+  --color-brand-200: #99C7DB;
+  --color-brand-300: #66AAC9;
+  --color-brand-400: #338EB7;
+  --color-brand-500: #1A5F7A;
+  --color-brand-600: #154D63;
+  --color-brand-700: #103B4C;
+  --color-brand-800: #0B2935;
+  --color-brand-900: #06171E;
 
   --color-ink-primary: #1A1714;
   --color-ink-secondary: #6B6560;
@@ -95,38 +95,38 @@
 }
 
 :root {
-  --background: #F7F5F2;
-  --foreground: #1A1714;
+  --background: #F4F7F9;
+  --foreground: #1A1C1E;
   --card: #FFFFFF;
-  --card-foreground: #1A1714;
+  --card-foreground: #1A1C1E;
   --popover: #FFFFFF;
-  --popover-foreground: #1A1714;
-  --primary: #EE5A1F;
+  --popover-foreground: #1A1C1E;
+  --primary: #1A5F7A;
   --primary-foreground: #FFFFFF;
-  --secondary: #F0EDE8;
-  --secondary-foreground: #1A1714;
-  --muted: #F0EDE8;
-  --muted-foreground: #6B6560;
-  --accent: #F0EDE8;
-  --accent-foreground: #1A1714;
+  --secondary: #EBF0F3;
+  --secondary-foreground: #1A1C1E;
+  --muted: #EBF0F3;
+  --muted-foreground: #5C6369;
+  --accent: #FFB7C5;
+  --accent-foreground: #1A1C1E;
   --destructive: #D94040;
-  --border: #E8E4DE;
-  --input: #E8E4DE;
-  --ring: #EE5A1F;
-  --chart-1: #EE5A1F;
-  --chart-2: #2D9966;
-  --chart-3: #2B7EC1;
+  --border: #DEE4E8;
+  --input: #DEE4E8;
+  --ring: #1A5F7A;
+  --chart-1: #1A5F7A;
+  --chart-2: #FFB7C5;
+  --chart-3: #2D9966;
   --chart-4: #D4860A;
-  --chart-5: #782215;
-  --radius: 0.625rem;
+  --chart-5: #0B2935;
+  --radius: 0.75rem;
   --sidebar: #FFFFFF;
-  --sidebar-foreground: #1A1714;
-  --sidebar-primary: #EE5A1F;
+  --sidebar-foreground: #1A1C1E;
+  --sidebar-primary: #1A5F7A;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: rgba(238, 90, 31, 0.08);
-  --sidebar-accent-foreground: #EE5A1F;
-  --sidebar-border: #E8E4DE;
-  --sidebar-ring: #EE5A1F;
+  --sidebar-accent: rgba(26, 95, 122, 0.08);
+  --sidebar-accent-foreground: #1A5F7A;
+  --sidebar-border: #DEE4E8;
+  --sidebar-ring: #1A5F7A;
 }
 
 .dark {

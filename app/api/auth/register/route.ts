@@ -1,24 +1,37 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { supabase } from "@/lib/supabase";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
     const { email, password, firstName, lastName } = await req.json();
 
-    const existing = await prisma.user.findUnique({ where: { email } });
+    const { data: existing } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+
     if (existing) {
       return NextResponse.json({ success: false, message: "User exists" }, { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
-      data: {
+    const { data: user, error: insertError } = await supabase
+      .from('users')
+      .insert({
+        id: crypto.randomUUID(),
         email,
         password: hashedPassword,
         name: `${firstName} ${lastName}`.trim(),
-      },
-    });
+      })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error("Insert error:", insertError);
+      return NextResponse.json({ success: false, message: "Failed to create user" }, { status: 500 });
+    }
 
     return NextResponse.json({
       success: true,
