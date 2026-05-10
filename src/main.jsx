@@ -414,27 +414,119 @@ function SettingsPage() {
 }
 
 function Community() {
-  const [query, setQuery] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [form, setForm] = useState({ destination: '', caption: '', hashtags: '', image_url: '' });
+  const [communities, setCommunities] = useState([]);
+  const [activeCommunity, setActiveCommunity] = useState(null);
+  const [form, setForm] = useState({ name: '', description: '' });
   const [toast, setToast] = useState('');
-  const load = () => request(`/community/posts?q=${encodeURIComponent(query)}`).then(setPosts);
-  useEffect(() => { load(); }, [query]);
-  async function createPost(e) {
+
+  const loadCommunities = () => request('/communities').then(setCommunities);
+
+  useEffect(() => {
+    loadCommunities();
+  }, []);
+
+  async function createCommunity(e) {
     e.preventDefault();
     try {
-      const post = await request('/community/posts', { method: 'POST', body: JSON.stringify(form) });
-      setPosts([post, ...posts]);
-      setForm({ destination: '', caption: '', hashtags: '', image_url: '' });
-      setToast('Travel memory posted.');
+      const comm = await request('/communities', { method: 'POST', body: JSON.stringify(form) });
+      setCommunities([comm, ...communities]);
+      setForm({ name: '', description: '' });
+      setToast(`Community "${comm.name}" created!`);
     } catch (err) { setToast(err.message); }
   }
-  async function like(post) {
-    const current = posts;
-    setPosts(posts.map((item) => item.id === post.id ? { ...item, likes: item.likes + 1 } : item));
-    try { await request(`/community/posts/${post.id}/like`, { method: 'POST' }); } catch { setPosts(current); }
+
+  if (activeCommunity) {
+    return <ChatRoom community={activeCommunity} onBack={() => { setActiveCommunity(null); loadCommunities(); }} />;
   }
-  return <motion.section {...page} className="panel community-page"><Header title="Travel Community Feed" subtitle="Upload memories, browse destination photos, and discover trending places." />{toast && <div className="alert">{toast}</div>}<form className="community-compose" onSubmit={createPost}><input placeholder="Destination" value={form.destination} onChange={(e) => setForm({ ...form, destination: e.target.value })} /><input placeholder="Image URL" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} /><textarea placeholder="Caption" value={form.caption} onChange={(e) => setForm({ ...form, caption: e.target.value })} /><input placeholder="#hashtags" value={form.hashtags} onChange={(e) => setForm({ ...form, hashtags: e.target.value })} /><button className="primary">Upload travel memory</button></form><div className="filters"><input placeholder="Search community..." value={query} onChange={(e) => setQuery(e.target.value)} /><select defaultValue="recent"><option value="recent">Sort by recent</option><option value="likes">Sort by likes</option></select></div><div className="masonry-feed">{posts.map((post) => <article className="memory-card" key={post.id}><img loading="lazy" src={post.image_url} alt={post.destination} /><div><span>{post.destination}</span><p>{post.caption}</p><small>{post.hashtags} · {post.author}</small><div className="memory-actions"><button onClick={() => like(post)}>Like {post.likes}</button><button onClick={() => navigator.clipboard.writeText(`${location.origin}/community#post-${post.id}`)}>Share</button><button>Comments {post.comment_count}</button></div></div></article>)}</div></motion.section>;
+
+  return (
+    <motion.section {...page} className="panel community-page">
+      <Header title="Travel Communities" subtitle="Join groups and chat with fellow travelers about specific destinations or interests." />
+      {toast && <div className="alert">{toast}</div>}
+      
+      <form className="community-compose" onSubmit={createCommunity}>
+        <input placeholder="Community Name (e.g., Solo Backpackers, Tokyo Foodies)" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
+        <textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+        <button className="primary">Create Community Room</button>
+      </form>
+
+      <div className="community-list">
+        {communities.map((comm) => (
+          <article key={comm.id} className="community-item" onClick={() => setActiveCommunity(comm)}>
+            <div className="community-info">
+              <h3>{comm.name}</h3>
+              <p>{comm.description || 'No description provided.'}</p>
+              <small>Created by {comm.creator_name}</small>
+            </div>
+            <button className="soft">Join Chat</button>
+          </article>
+        ))}
+        {communities.length === 0 && <Empty text="No communities found. Be the first to start a conversation!" />}
+      </div>
+    </motion.section>
+  );
+}
+
+function ChatRoom({ community, onBack }) {
+  const { user } = useAuth();
+  const [messages, setMessages] = useState([]);
+  const [body, setBody] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const loadMessages = () => request(`/communities/${community.id}/messages`).then((data) => {
+    setMessages(data);
+    setLoading(false);
+  });
+
+  useEffect(() => {
+    loadMessages();
+    const interval = setInterval(loadMessages, 5000); // Poll for new messages every 5s
+    return () => clearInterval(interval);
+  }, [community.id]);
+
+  async function sendMessage(e) {
+    e.preventDefault();
+    if (!body.trim()) return;
+    const optimistic = { id: Date.now(), body, author: user.name, created_at: new Date().toISOString() };
+    setMessages([...messages, optimistic]);
+    setBody('');
+    try {
+      await request(`/communities/${community.id}/messages`, { method: 'POST', body: JSON.stringify({ body }) });
+      loadMessages();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  return (
+    <motion.section {...page} className="panel chat-room">
+      <div className="chat-header">
+        <button onClick={onBack} className="ghost">← Back</button>
+        <div>
+          <h2>{community.name}</h2>
+          <p>{community.description}</p>
+        </div>
+      </div>
+      
+      <div className="chat-messages">
+        {loading ? <Loader /> : messages.map((msg) => (
+          <div key={msg.id} className={msg.author === user.name ? 'message mine' : 'message'}>
+            <div className="message-info">
+              <strong>{msg.author}</strong>
+              <small>{format(parseISO(msg.created_at), 'HH:mm')}</small>
+            </div>
+            <div className="message-body">{msg.body}</div>
+          </div>
+        ))}
+        {!loading && messages.length === 0 && <p className="muted-line">No messages yet. Say hello!</p>}
+      </div>
+
+      <form className="chat-input" onSubmit={sendMessage}>
+        <input placeholder="Type a message..." value={body} onChange={(e) => setBody(e.target.value)} />
+        <button className="primary">Send</button>
+      </form>
+    </motion.section>
+  );
 }
 
 function Invoices() {

@@ -257,6 +257,25 @@ export function migrate() {
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE TABLE IF NOT EXISTS communities (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT,
+      user_id INTEGER NOT NULL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS community_messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      community_id INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      body TEXT NOT NULL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (community_id) REFERENCES communities(id) ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+
     CREATE INDEX IF NOT EXISTS idx_trips_user_id ON trips(user_id);
     CREATE INDEX IF NOT EXISTS idx_stops_trip_id ON stops(trip_id);
     CREATE INDEX IF NOT EXISTS idx_expenses_trip_id ON expenses(trip_id);

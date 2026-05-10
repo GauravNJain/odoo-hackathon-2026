@@ -224,6 +224,27 @@ app.post('/api/community/posts/:id/comments', auth, validate(z.object({ body: sa
   res.status(201).json(one('SELECT * FROM community_comments WHERE id = ?', [result.lastInsertRowid]));
 });
 
+app.get('/api/communities', auth, (req, res) => {
+  res.json(all('SELECT communities.*, users.name creator_name FROM communities JOIN users ON users.id = communities.user_id ORDER BY communities.created_at DESC'));
+});
+
+app.post('/api/communities', auth, validate(z.object({ name: safeText(2, 100), description: safeText(0, 500).optional().default('') })), (req, res) => {
+  const result = run('INSERT INTO communities (name, description, user_id) VALUES (?, ?, ?)', [req.body.name, req.body.description, req.user.id]);
+  audit(req.user.id, 'community.created', 'community', result.lastInsertRowid);
+  res.status(201).json(one('SELECT * FROM communities WHERE id = ?', [result.lastInsertRowid]));
+});
+
+app.get('/api/communities/:id/messages', auth, (req, res) => {
+  res.json(all('SELECT community_messages.*, users.name author, users.photo_url author_photo FROM community_messages JOIN users ON users.id = community_messages.user_id WHERE community_id = ? ORDER BY community_messages.created_at ASC', [req.params.id]));
+});
+
+app.post('/api/communities/:id/messages', auth, validate(z.object({ body: safeText(1, 1000) })), (req, res) => {
+  const community = one('SELECT id FROM communities WHERE id = ?', [req.params.id]);
+  if (!community) return res.status(404).json({ error: 'Community not found' });
+  const result = run('INSERT INTO community_messages (community_id, user_id, body) VALUES (?, ?, ?)', [req.params.id, req.user.id, req.body.body]);
+  res.status(201).json(one('SELECT community_messages.*, users.name author FROM community_messages JOIN users ON users.id = community_messages.user_id WHERE community_messages.id = ?', [result.lastInsertRowid]));
+});
+
 app.get('/api/trips', auth, (req, res) => {
   const trips = all(`
     SELECT trips.*, COUNT(stops.id) destination_count
