@@ -414,6 +414,7 @@ function SettingsPage() {
 }
 
 function Community() {
+  const { user } = useAuth();
   const [communities, setCommunities] = useState([]);
   const [activeCommunity, setActiveCommunity] = useState(null);
   const [form, setForm] = useState({ name: '', description: '' });
@@ -432,6 +433,16 @@ function Community() {
       setCommunities([comm, ...communities]);
       setForm({ name: '', description: '' });
       setToast(`Community "${comm.name}" created!`);
+    } catch (err) { setToast(err.message); }
+  }
+
+  async function deleteCommunity(e, id) {
+    e.stopPropagation();
+    if (!confirm('Are you sure you want to delete this community and all its messages?')) return;
+    try {
+      await request(`/communities/${id}`, { method: 'DELETE' });
+      setCommunities(communities.filter((c) => c.id !== id));
+      setToast('Community deleted.');
     } catch (err) { setToast(err.message); }
   }
 
@@ -458,7 +469,10 @@ function Community() {
               <p>{comm.description || 'No description provided.'}</p>
               <small>Created by {comm.creator_name}</small>
             </div>
-            <button className="soft">Join Chat</button>
+            <div className="community-actions">
+              {user?.role === 'admin' && <button className="icon-btn delete" onClick={(e) => deleteCommunity(e, comm.id)} aria-label="Delete community"><Trash2 size={18} /></button>}
+              <button className="soft">Join Chat</button>
+            </div>
           </article>
         ))}
         {communities.length === 0 && <Empty text="No communities found. Be the first to start a conversation!" />}

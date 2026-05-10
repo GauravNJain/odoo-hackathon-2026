@@ -235,6 +235,10 @@ main { min-width: 0; padding: 24px clamp(16px, 3vw, 42px) 60px; }
 .community-info p { color: var(--muted); margin-bottom: 8px; }
 .community-info small { color: var(--amber); font-weight: 700; }
 
+.community-actions { display: flex; gap: 8px; align-items: center; }
+.icon-btn { border: 1px solid var(--line); background: rgba(255,255,255,.45); border-radius: 8px; min-width: 42px; min-height: 42px; display: grid; place-items: center; cursor: pointer; color: var(--ink); padding: 0; }
+.icon-btn.delete:hover { background: rgba(155,45,31,.11); color: #9b2d1f; border-color: rgba(155,45,31,.24); }
+
 .chat-room { display: flex; flex-direction: column; height: calc(100vh - 120px); max-height: 800px; }
 .chat-header { display: flex; align-items: center; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
 .chat-header h2 { font-size: 1.5rem; color: var(--teal); }

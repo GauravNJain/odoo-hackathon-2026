@@ -234,6 +234,12 @@ app.post('/api/communities', auth, validate(z.object({ name: safeText(2, 100), d
   res.status(201).json(one('SELECT * FROM communities WHERE id = ?', [result.lastInsertRowid]));
 });
 
+app.delete('/api/communities/:id', auth, adminOnly, (req, res) => {
+  run('DELETE FROM communities WHERE id = ?', [req.params.id]);
+  audit(req.user.id, 'community.deleted', 'community', req.params.id);
+  res.json({ ok: true });
+});
+
 app.get('/api/communities/:id/messages', auth, (req, res) => {
   res.json(all('SELECT community_messages.*, users.name author, users.photo_url author_photo FROM community_messages JOIN users ON users.id = community_messages.user_id WHERE community_id = ? ORDER BY community_messages.created_at ASC', [req.params.id]));
 });
