@@ -1,187 +1,61 @@
-# 🌍 Traveloop
-### Plan Better. Travel Smarter. Create Memories.
+# ✈️ TRAVELOOP
+> [cite_start]**Personalized Travel Planning Made Easy** [cite: 2]
 
-Traveloop is a smart and interactive travel planning platform built to make trip organization simple, fun, and stress-free.
-
-Whether you're planning a solo adventure, a family vacation, or a multi-city tour, Traveloop helps you organize everything in one place — from itineraries and budgets to activities and packing lists.
+[cite_start]Traveloop is a personalized, intelligent, and collaborative platform designed to transform the way individuals plan and experience travel[cite: 4]. [cite_start]The platform empowers users to dream, design, and organize multi-city trips with ease by offering an end-to-end travel planning tool[cite: 5, 8]. [cite_start]It envisions a world where users explore global destinations and visualize their journeys through structured itineraries[cite: 6].
 
 ---
 
-# ✨ Features
-
-## 🔐 Authentication
-- User Login & Signup
-- Forgot Password Support
-- Secure User Authentication
-
-## 🏠 Dashboard
-- View upcoming trips
-- Explore destinations
-- Quick access to recent plans
-
-## 🧳 Trip Management
-- Create custom trips
-- Add travel dates and descriptions
-- Upload trip cover photos
-
-## 🗺️ Itinerary Builder
-- Add multiple cities/stops
-- Plan activities day-wise
-- Reorder destinations easily
-
-## 🔎 City & Activity Search
-- Search cities worldwide
-- Discover attractions and experiences
-- Add activities to your itinerary
-
-## 💰 Budget Tracking
-- Expense estimation
-- Cost breakdowns
-- Daily spending analysis
-
-## 🎒 Packing Checklist
-- Add packing items
-- Categorize essentials
-- Mark items as packed
-
-## 📝 Notes & Journal
-- Save reminders and travel notes
-- Organize notes by trip/day
-
-## 🌐 Trip Sharing
-- Public itinerary sharing
-- Shareable trip links
-- Copy shared itineraries
+### 🔄 APPLICATION FLOW
+<p align="center">
+  <img src="./Untitled-2026-05-10-1036.excalidraw.svg" width="600" alt="Traveloop Flowgraph">
+</p>
 
 ---
 
-# 🛠️ Tech Stack
-
-### Frontend
-- React.js
-- Tailwind CSS
-- React Router
-
-### Backend
-- Node.js
-- Express.js
-
-### Database
-- MySQL / PostgreSQL
-
-### Authentication
-- JWT Authentication
-- bcrypt
+### 🎯 MISSION & VISION
+* [cite_start]**Simplified Planning**: Build a user-centric application that simplifies the complexity of multi-city travel[cite: 8].
+* [cite_start]**Intuitive Tools**: Manage travel stops, explore cities, and estimate trip budgets automatically[cite: 11].
+* [cite_start]**Full Visibility**: Ensure travelers stay within budget and enjoy full visibility of their journey[cite: 15].
 
 ---
 
-# 📂 Project Structure
+### 🛠️ KEY FEATURES
 
-```bash
-traveloop/
-│
-├── client/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── assets/
-│
-├── server/
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
-│   └── middleware/
-│
-├── database/
-│   └── schema.sql
-│
-└── README.md
-```
+#### 1. 🗺️ ITINERARY MANAGEMENT
+* [cite_start]**Itinerary Builder**: Construct a full day-wise trip plan in an interactive format[cite: 49].
+* [cite_start]**Dynamic Stops**: Select cities, assign travel dates, and reorder stops easily[cite: 51].
+* [cite_start]**Visual Review**: View the completed trip through a day-layout or a calendar/list toggle[cite: 56].
+
+#### 2. 🔍 DISCOVERY & SEARCH
+* [cite_start]**City Search**: Find destinations with metadata like country, cost index, and popularity[cite: 58].
+* [cite_start]**Activity Search**: Enrich trips with sightseeing, food tours, or adventure activities[cite: 65].
+* [cite_start]**Trip Notes**: Jot down hotel check-in info, local contacts, or daily reminders[cite: 93].
+
+#### 3. 💰 BUDGETING & LOGISTICS
+* [cite_start]**Cost Breakdown**: View estimated totals and breakdowns for transport, stay, activities, and meals[cite: 71].
+* [cite_start]**Visual Analytics**: Analyze spending through pie/bar charts and daily cost averages[cite: 72].
+* [cite_start]**Packing Checklist**: A per-trip checklist to manage essential items like documents and electronics[cite: 77].
+
+#### 4. 🤝 COLLABORATION
+* [cite_start]**Public Sharing**: Generate a public URL to share a version of your itinerary with others[cite: 85].
+* [cite_start]**Copy Trip**: Allow others to view, get inspired, or copy your journey to their own account[cite: 81, 85].
 
 ---
 
-# 🚀 Getting Started
+### 🏗️ TECHNICAL ARCHITECTURE
+> [cite_start]**A solution that is both functional and insightful**[cite: 14].
 
-## Clone Repository
+[cite_start]The application demonstrates the use of relational databases to store complex data such as user itineraries, stops, and estimated expenses[cite: 23].
 
-```bash
-git clone https://github.com/your-username/traveloop.git
-cd traveloop
-```
-
-## Install Dependencies
-
-### Frontend
-
-```bash
-cd client
-npm install
-```
-
-### Backend
-
-```bash
-cd server
-npm install
-```
+* [cite_start]**Authentication**: Secure entry point for users to create accounts and manage personal plans[cite: 28, 29].
+* [cite_start]**Dynamic UI**: Interfaces that adapt to each individual user's trip flow[cite: 24].
+* [cite_start]**Admin Dashboard**: Optional interface to track user trends and platform usage[cite: 97, 100].
 
 ---
 
-# ⚙️ Environment Variables
-
-Create a `.env` file inside the server folder:
-
-```env
-PORT=5000
-
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=yourpassword
-DB_NAME=traveloop
-
-JWT_SECRET=your_secret_key
-```
+### 🔗 RESOURCES
+* [cite_start]**Design Mockup**: [View on Excalidraw](https://link.excalidraw.com/l/65VNwvy7c4X/22030WE3bE4) [cite: 101]
+* [cite_start]**Platform**: Powered by Odoo[cite: 1].
 
 ---
-
-# ▶️ Run the Project
-
-### Start Backend
-
-```bash
-cd server
-npm start
-```
-
-### Start Frontend
-
-```bash
-cd client
-npm start
-```
-
----
-
-# 🎯 Vision
-
-Traveloop aims to make travel planning as exciting as the journey itself by helping users organize trips efficiently, manage budgets, and share experiences seamlessly.
-
----
-
-# 🚀 Future Enhancements
-
-- AI-based recommendations
-- Weather integration
-- Flight & hotel booking APIs
-- Interactive maps
-- Mobile app support
-
----
-
-# 📄 License
-
-This project is developed for educational and hackathon purposes.
-
----
-
-# ✈️ Made with passion for travelers around the world.
+*Developed for the Traveloop Hackathon Challenge.*
