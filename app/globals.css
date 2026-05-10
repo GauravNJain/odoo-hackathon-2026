@@ -164,9 +164,6 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
     @apply bg-canvas text-ink-primary font-sans;
   }
