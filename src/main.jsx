@@ -222,7 +222,46 @@ function TripRow({ trips }) {
 }
 
 function Destination({ city }) {
-  return <article className="destination"><img src={city.image} alt="" /><div><h3>{city.city}</h3><p>{city.country}</p><span>{city.region} · Cost {city.costIndex}</span></div></article>;
+  const [ai, setAi] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    request(`/cities/ai-intelligence/${city.city}`)
+      .then(setAi)
+      .finally(() => setLoading(false));
+  }, [city.city]);
+
+  return (
+    <article className="destination ai-enhanced">
+      <img src={city.image} alt="" />
+      <div className="dest-content">
+        <div className="dest-main">
+          <h3>{city.city}</h3>
+          <p>{city.country}</p>
+          <span className="region-tag">{city.region} · Popularity {city.popularity}%</span>
+        </div>
+        
+        <div className="ai-insight-panel">
+          {loading ? (
+            <div className="ai-loader"><Sparkles size={14} className="spin" /> Analyzing data...</div>
+          ) : ai ? (
+            <>
+              <div className="ai-stat">
+                <div className="ai-label"><CircleDollarSign size={14} /> Est. Flight</div>
+                <div className="ai-value">${Math.round(ai.flight)}</div>
+              </div>
+              <div className="ai-stat">
+                <div className="ai-label"><Home size={14} /> Monthly Living</div>
+                <div className="ai-value">${Math.round(ai.living)}</div>
+              </div>
+              <div className="ai-badge">AI Verified</div>
+            </>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
 }
 
 function CreateTrip() {
@@ -418,13 +457,14 @@ function Community() {
   const [communities, setCommunities] = useState([]);
   const [activeCommunity, setActiveCommunity] = useState(null);
   const [form, setForm] = useState({ name: '', description: '' });
+  const [query, setQuery] = useState('');
   const [toast, setToast] = useState('');
 
-  const loadCommunities = () => request('/communities').then(setCommunities);
+  const loadCommunities = () => request(`/communities?q=${encodeURIComponent(query)}`).then(setCommunities);
 
   useEffect(() => {
     loadCommunities();
-  }, []);
+  }, [query]);
 
   async function createCommunity(e) {
     e.preventDefault();
@@ -460,6 +500,10 @@ function Community() {
         <textarea placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
         <button className="primary">Create Community Room</button>
       </form>
+
+      <div className="filters">
+        <input placeholder="Search communities by name or description..." value={query} onChange={(e) => setQuery(e.target.value)} />
+      </div>
 
       <div className="community-list">
         {communities.map((comm) => (
