@@ -170,7 +170,7 @@ main { min-width: 0; padding: 24px clamp(16px, 3vw, 42px) 60px; }
 .insight-copy p:last-of-type { color: #9b2d1f; }
 .admin-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr); gap: 18px; }
 .staff-table { border: 1px solid var(--line); border-radius: 8px; overflow: auto; background: rgba(255,255,255,.48); }
-.staff-row { min-width: 920px; display: grid; grid-template-columns: 230px 130px 140px 1fr 70px; gap: 10px; align-items: center; padding: 12px; border-bottom: 1px solid var(--line); }
+.staff-row { min-width: 960px; display: grid; grid-template-columns: 230px 130px 140px 1fr 70px 50px; gap: 10px; align-items: center; padding: 12px; border-bottom: 1px solid var(--line); }
 .staff-row:last-child { border-bottom: 0; }
 .staff-head { font-weight: 800; color: var(--teal); background: rgba(13,92,99,.08); }
 .staff-row small { display: block; color: var(--muted); margin-top: 4px; }
