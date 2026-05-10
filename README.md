@@ -1,71 +1,67 @@
-# Traveloop
+# ✈️ TRAVELOOP
+> **Intelligent & Collaborative Travel Planning**
 
-Traveloop is a full-stack travel planning platform with trip planning, itinerary management, community memories, expense tracking, PDF invoices, and an admin panel with role-based access control.
+Traveloop is a personalized, intelligent, and collaborative platform that transforms the way individuals plan and experience travel. It empowers users to dream, design, and organize multi-city trips with ease by offering an end-to-end tool that combines flexibility and interactivity.
 
-## Setup
+---
 
-```powershell
-node "C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js" install
-node server/seed.js
-node "C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js" run dev
-```
+### 🔄 APPLICATION FLOW
+<p align="center">
+  <img src="./Untitled-2026-05-10-1036.excalidraw.svg" width="550" alt="Traveloop Flowgraph">
+</p>
 
-Open `http://localhost:5173`.
+---
 
-## Demo Credentials
+### 🔑 DEMO CREDENTIALS
+Explore the platform using these pre-configured accounts:
 
-Admin:
+#### 👑 Administrative Access
+- **Email:** `admin@traveloop.test`
+- **Password:** `admin12345`
 
-```text
-admin@traveloop.test
-admin12345
-```
+#### 🧳 Traveler Access
+- **Email:** `mira@traveloop.test`
+- **Password:** `traveloop123`
 
-Traveler:
+---
 
-```text
-mira@traveloop.test
-traveloop123
-```
+### 🎯 PROJECT MISSION
 
-## Updated Folder Structure
+The platform aims to simplify the complexity of planning multi-city travel through intuitive user-centric tools.
+
+- **Dynamic Itineraries**: Add and manage travel stops, activities, and durations.
+- **Financial Clarity**: Automatically estimate trip budgets and receive detailed cost breakdowns.
+- **Community Sharing**: Share trip plans publicly or with friends to inspire others.
+
+---
+
+### 🛠️ CORE FEATURES
+
+#### 1. 🗺️ ITINERARY & DESTINATION MANAGEMENT
+- **Itinerary Builder**: Construct a full day-wise trip plan in an interactive format.
+- **City & Activity Search**: Discover destinations with metadata like cost index, popularity, and categorized activities.
+- **Trip Journal**: Store hotel check-in details, local contacts, and trip reminders.
+
+#### 2. 💰 BUDGETING & LOGISTICS
+- **Expense Tracking**: View cost breakdowns for transport, stay, meals, and activities with visual charts.
+- **Packing Checklist**: Maintain a per-trip checklist for travel essentials.
+- **PDF Invoicing**: Generate downloadable PDF invoices containing trip and expense details.
+
+#### 3. 🔐 SECURITY & ADMINISTRATION
+- **Advanced Authentication**: JWT authentication with httpOnly session cookie fallback and bcrypt password hashing.
+- **Security Enforcement**: CSRF protection, CAPTCHA verification, rate limiting, and secure input validation.
+- **Admin Panel**: Role-based access control for managing users, moderating community posts, and viewing audit logs.
+
+---
+
+### 📂 FOLDER STRUCTURE
 
 ```text
 traveloop/
-  server/
-    auth.js
-    catalog.js
-    db.js
-    index.js
-    security.js
-    seed.js
-    traveloop.sqlite
-  src/
-    main.jsx
-    styles.css
-  index.html
-  package.json
-  vite.config.js
-  .env.example
-  README.md
-  SECURITY_CHECKLIST.md
-  API.md
-```
-
-## Main Features
-
-- JWT auth with httpOnly session cookie fallback
-- CSRF token enforcement on unsafe requests
-- Login CAPTCHA and rate limiting
-- bcrypt password hashing
-- Admin role with protected APIs
-- User block/unblock, delete, staff privilege management
-- Community posts with image URLs, likes, comments, moderation status
-- Real expenses persisted by trip
-- Backend-generated PDF invoices with trip/user/expense data
-- Audit logs for sensitive actions
-- Destination management and featured location data
-
-## Notes
-
-The local database uses `sql.js` for zero-native-build local development. For production, move the repository layer to PostgreSQL, keep the parameterized query pattern, and run migrations through a migration tool.
+│
+├── server/              # Backend: Auth, DB, Security, APIs
+├── src/                 # Frontend React components and pages
+├── public/              # Static assets
+├── index.html           # Main HTML entry
+├── package.json         # Project dependencies
+└── vite.config.js       # Vite configuration
